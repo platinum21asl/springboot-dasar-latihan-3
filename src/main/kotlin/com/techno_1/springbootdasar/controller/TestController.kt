@@ -7,6 +7,7 @@ import com.techno_1.springbootdasar.domain.dto.response.ResFullNameDto
 import com.techno_1.springbootdasar.domain.dto.response.ResIdentitas
 import com.techno_1.springbootdasar.domain.dto.response.ResResultOperationDto
 import com.techno_1.springbootdasar.service.LogicService
+import com.thedeanda.lorem.Lorem
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
@@ -98,7 +99,7 @@ class TestController(
 
     @PostMapping("calculator/division")
     fun getDivision(@RequestBody reqOperationDto: ReqOperationDto): ResponseEntity<ResBaseDto<ResResultOperationDto>> {
-        val response = logicService.resultDivsion(reqOperationDto)
+        val response = logicService.resultDivision(reqOperationDto)
 
         return ResponseEntity.ok().body(response)
     }
@@ -113,6 +114,13 @@ class TestController(
     @PostMapping("calculator/subtraction")
     fun getSubtraction(@RequestBody reqOperationDto: ReqOperationDto): ResponseEntity<ResBaseDto<ResResultOperationDto>> {
         val response = logicService.resultSubtraction(reqOperationDto)
+
+        return ResponseEntity.ok().body(response)
+    }
+
+    @GetMapping("/random/name")
+    fun getRandomNames(@RequestParam size: Int): ResponseEntity<ResBaseDto<MutableList<ResFullNameDto>>> {
+        val response = logicService.randomPerson(size)
 
         return ResponseEntity.ok().body(response)
     }

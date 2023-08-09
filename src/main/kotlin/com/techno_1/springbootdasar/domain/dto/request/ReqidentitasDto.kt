@@ -12,6 +12,9 @@ data class ReqidentitasDto(
     @field:JsonProperty(value = "last_name")
     val lastName : String? =null,
 
+//    @field:JsonProperty(value = "full_name")
+//    val fullName : String? =null,
+
     @field:JsonProperty(value = "age")
     val age : Long? = null
 )

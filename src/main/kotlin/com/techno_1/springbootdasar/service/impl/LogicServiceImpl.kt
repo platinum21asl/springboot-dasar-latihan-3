@@ -7,20 +7,22 @@ import com.techno_1.springbootdasar.domain.dto.response.ResFullNameDto
 import com.techno_1.springbootdasar.domain.dto.response.ResResultOperationDto
 
 import com.techno_1.springbootdasar.service.LogicService
+import com.thedeanda.lorem.LoremIpsum
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.RequestParam
 
 @Service
-class LogicServiceImpl: LogicService {
-
+class LogicServiceImpl : LogicService {
+    private val lorem = LoremIpsum.getInstance()
     override fun printName(name: String) {
         println("My name is : $name")
     }
 
     override fun oddsOrEvent(number: Int): String {
-        if(number % 2 == 0){
+        if (number % 2 == 0) {
             return "Event"
-        }else{
-            return  "Odds"
+        } else {
+            return "Odds"
         }
 
     }
@@ -50,12 +52,14 @@ class LogicServiceImpl: LogicService {
             valueB = reqOperationDto.valueB,
             resultAB = result,
         )
+
         return ResBaseDto(
             data = data
         )
+
     }
 
-    override fun resultDivsion(reqOperationDto: ReqOperationDto): ResBaseDto<ResResultOperationDto> {
+    override fun resultDivision(reqOperationDto: ReqOperationDto): ResBaseDto<ResResultOperationDto> {
         val result = reqOperationDto.valueA / reqOperationDto.valueB
 
 
@@ -64,9 +68,11 @@ class LogicServiceImpl: LogicService {
             valueB = reqOperationDto.valueB,
             resultAB = result,
         )
+
         return ResBaseDto(
             data = data
         )
+
     }
 
     override fun resultAddition(reqOperationDto: ReqOperationDto): ResBaseDto<ResResultOperationDto> {
@@ -78,9 +84,11 @@ class LogicServiceImpl: LogicService {
             valueB = reqOperationDto.valueB,
             resultAB = result,
         )
+
         return ResBaseDto(
             data = data
         )
+
     }
 
     override fun resultSubtraction(reqOperationDto: ReqOperationDto): ResBaseDto<ResResultOperationDto> {
@@ -92,8 +100,51 @@ class LogicServiceImpl: LogicService {
             valueB = reqOperationDto.valueB,
             resultAB = result,
         )
+
+
         return ResBaseDto(
             data = data
         )
+
+
     }
+
+    override fun randomPerson(size: Int): ResBaseDto<MutableList<ResFullNameDto>> {
+        val randomNames = mutableListOf<ResFullNameDto>()
+
+
+        for (i in 1..size) {
+            val firstName = lorem.firstName
+            val lastName = lorem.lastName
+            val fullName = "$firstName $lastName"
+            val nameResponse = ResFullNameDto(firstName, lastName, fullName)
+
+          randomNames.add(nameResponse)
+        }
+        return ResBaseDto(
+            data = randomNames
+        )
+    }
+
+//    override fun randomPerson(reqidentitasDto: ReqidentitasDto): ResBaseDto<ResFullNameDto> {
+//
+//        val randomNames = mutableListOf<ReqidentitasDto>()
+//
+//        val fullNameTemp = reqidentitasDto.firstName + " " + reqidentitasDto.lastName
+//
+//        for (i in 1..size) {
+//            val resFullName = ResFullNameDto(
+//                firstName = lorem.firstName,
+//                lastName = lorem.lastName,
+//                fullName = fullNameTemp,
+//            )
+//            randomNames.add(resFullName)
+//        }
+//
+//        return ResBaseDto(
+//            data = resFullName
+//        )
+//    }
 }
+
+
