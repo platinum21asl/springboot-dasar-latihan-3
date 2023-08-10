@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/v1/api")
 class TestController(
-    private  val logicService: LogicService
+    private val logicService: LogicService
 ) {
 
     @Value("\${person.name.first}")

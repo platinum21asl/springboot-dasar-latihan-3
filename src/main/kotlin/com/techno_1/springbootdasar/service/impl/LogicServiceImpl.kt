@@ -126,25 +126,7 @@ class LogicServiceImpl : LogicService {
         )
     }
 
-//    override fun randomPerson(reqidentitasDto: ReqidentitasDto): ResBaseDto<ResFullNameDto> {
-//
-//        val randomNames = mutableListOf<ReqidentitasDto>()
-//
-//        val fullNameTemp = reqidentitasDto.firstName + " " + reqidentitasDto.lastName
-//
-//        for (i in 1..size) {
-//            val resFullName = ResFullNameDto(
-//                firstName = lorem.firstName,
-//                lastName = lorem.lastName,
-//                fullName = fullNameTemp,
-//            )
-//            randomNames.add(resFullName)
-//        }
-//
-//        return ResBaseDto(
-//            data = resFullName
-//        )
-//    }
+
 }
 
 
