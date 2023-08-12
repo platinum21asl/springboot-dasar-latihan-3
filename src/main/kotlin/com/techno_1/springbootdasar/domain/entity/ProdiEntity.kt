@@ -15,7 +15,6 @@ data class ProdiEntity(
     @field:Column(name="uuid", columnDefinition = "uuid")
     val id: UUID? = null,
 
-
     @field:Column(name="nama_prodi", columnDefinition = "varchar(100)")
     val namaProdi: String? = null,
 )

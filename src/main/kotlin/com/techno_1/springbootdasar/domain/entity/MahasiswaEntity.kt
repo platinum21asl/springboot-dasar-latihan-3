@@ -7,21 +7,20 @@ import javax.persistence.*
 data class MahasiswaEntity(
 
     @field:Id
-    @field:GeneratedValue(strategy = GenerationType.IDENTITY)
-    @field:Column(name="id", columnDefinition = "bigint")
+    @field:GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @field:Column(name = "id", columnDefinition = "bigint")
     val id: Long? = null,
 
-
-    @field:Column(name="nim", columnDefinition = "bigint")
+    @field:Column(name = "nim", columnDefinition = "bigint")
     val nim: Long? = null,
 
-    @field:Column(name="nama", columnDefinition = "varchar(100)")
+    @field:Column(name = "nama", columnDefinition = "varchar(100)")
     val nama: String? = null,
 
-    @field:Column(name="gender", columnDefinition = "varchar(100)")
+    @field:Column(name = "gender", columnDefinition = "varchar(100)")
     val gender: String? = null,
 
-    @field:Column(name="alamat", columnDefinition = "text")
+    @field:Column(name = "alamat", columnDefinition = "text")
     val alamat: String? = null,
 
     @ManyToOne

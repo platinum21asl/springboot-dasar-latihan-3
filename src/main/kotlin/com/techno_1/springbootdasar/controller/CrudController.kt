@@ -2,8 +2,10 @@ package com.techno_1.springbootdasar.controller
 
 import com.techno_1.springbootdasar.domain.dto.request.ReqMahasiswaDto
 import com.techno_1.springbootdasar.domain.dto.request.ReqProdiDto
+import com.techno_1.springbootdasar.domain.dto.request.ReqUserDto
 import com.techno_1.springbootdasar.domain.dto.response.ResBaseDto
 import com.techno_1.springbootdasar.domain.dto.response.ResMahasiswaDto
+import com.techno_1.springbootdasar.domain.dto.response.ResUserDto
 import com.techno_1.springbootdasar.service.CrudService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -14,6 +16,11 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
+import java.util.UUID
+import javax.validation.Valid
+import kotlin.collections.ArrayList
+
 
 
 @RestController
@@ -36,13 +43,13 @@ class CrudController(
     }
 
     @PostMapping("/mahasiswa")
-    fun insert(@RequestBody reqMahasiswaDto: ReqMahasiswaDto): ResponseEntity<ResBaseDto<Any>> {
+    fun insert(@Valid @RequestBody reqMahasiswaDto: ReqMahasiswaDto): ResponseEntity<ResBaseDto<Any>> {
         val response = crudService.insert(reqMahasiswaDto)
         return ResponseEntity.ok().body(response)
     }
 
     @PutMapping("/mahasiswa/{id}")
-    fun update(@PathVariable("id")id: Long, @RequestBody reqMahasiswaDto: ReqMahasiswaDto): ResponseEntity<ResBaseDto<Any>> {
+    fun update(@Valid @PathVariable("id")id: Long, @RequestBody reqMahasiswaDto: ReqMahasiswaDto): ResponseEntity<ResBaseDto<Any>> {
         val response = crudService.update(reqMahasiswaDto, id)
         return ResponseEntity.ok().body(response)
     }
@@ -54,8 +61,40 @@ class CrudController(
     }
 
     @PostMapping("/prodi")
-    fun insertProdi(@RequestBody reqProdiDto: ReqProdiDto): ResponseEntity<ResBaseDto<Any>> {
+    fun insertProdi(@Valid @RequestBody reqProdiDto: ReqProdiDto): ResponseEntity<ResBaseDto<Any>> {
         val response = crudService.insertProdi(reqProdiDto)
+        return ResponseEntity.ok().body(response)
+    }
+
+
+    @GetMapping("/users")
+    fun getAllUsers(): ResponseEntity<ResBaseDto<ArrayList<ResUserDto>>> {
+        val response = crudService.getAllUsers()
+
+        return ResponseEntity.ok().body(response)
+    }
+
+    @GetMapping("/users/{id}")
+    fun getUsersByUId(@PathVariable("id") id: Int): ResponseEntity<ResBaseDto<ResUserDto>> {
+        val response = crudService.getUsersById(id)
+        return ResponseEntity.ok().body(response)
+    }
+//
+    @PostMapping("/users")
+    fun insertUsers(@Valid @RequestBody reqUserDto: ReqUserDto): ResponseEntity<ResBaseDto<Any>> {
+        val response = crudService.insertUsers(reqUserDto)
+        return ResponseEntity.ok().body(response)
+    }
+//
+    @PutMapping("/users/{id}")
+    fun updateUsers(@Valid @PathVariable("id")id: Int, @RequestBody reqUserDto: ReqUserDto): ResponseEntity<ResBaseDto<Any>> {
+        val response = crudService.updateUsers(reqUserDto, id)
+        return ResponseEntity.ok().body(response)
+    }
+//
+    @DeleteMapping("/users/{id}")
+    fun deleteUsers(@PathVariable("id") id: Int): ResponseEntity<ResBaseDto<Any>> {
+        val response = crudService.deleteUsers(id)
         return ResponseEntity.ok().body(response)
     }
 }
