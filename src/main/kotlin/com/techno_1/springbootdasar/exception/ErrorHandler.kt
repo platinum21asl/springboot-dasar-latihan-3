@@ -1,0 +1,31 @@
+package com.techno_1.springbootdasar.exception
+
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.bind.annotation.ControllerAdvice
+import org.springframework.web.bind.annotation.ExceptionHandler
+
+
+@ControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
+class ErrorHandler {
+
+    @ExceptionHandler(CustomExceptionHandler::class)
+    fun handleCustomException(exception: RuntimeException): ResponseEntity<Any>{
+        val result = mapOf<String, Any>("status" to "F", "error" to "field", "message" to exception.message!!)
+        return ResponseEntity.badRequest().body(result)
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleArgumentNotValidException(exception: MethodArgumentNotValidException): ResponseEntity<Any> {
+        val errors = mutableListOf<String>()
+        exception.bindingResult.fieldErrors.forEach{
+            errors.add(it.defaultMessage!!)
+        }
+        val result = mapOf<String, Any>("status" to "False", "error" to "field", "message" to errors)
+        return ResponseEntity.badRequest().body(result)
+    }
+
+}
