@@ -16,9 +16,7 @@ interface CrudService {
     fun insert(reqMahasiswaDto: ReqMahasiswaDto): ResBaseDto<Any>
     fun update(reqMahasiswaDto: ReqMahasiswaDto, id: Long): ResBaseDto<Any>
     fun delete(id: Long): ResBaseDto<Any>
-
     fun insertProdi(reqProdiDto: ReqProdiDto): ResBaseDto<Any>
-
     fun insertUsers(reqUserDto: ReqUserDto): ResBaseDto<Any>
     fun getAllUsers(): ResBaseDto<ArrayList<ResUserDto>>
 

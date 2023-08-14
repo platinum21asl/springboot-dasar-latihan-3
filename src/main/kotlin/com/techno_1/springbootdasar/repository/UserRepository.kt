@@ -2,6 +2,7 @@ package com.techno_1.springbootdasar.repository
 
 import com.techno_1.springbootdasar.domain.entity.ProdiEntity
 import com.techno_1.springbootdasar.domain.entity.UserEntity
+import org.apache.catalina.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
@@ -11,6 +12,7 @@ import java.util.*
 interface UserRepository: JpaRepository<UserEntity, String> {
 
     fun findById(id: Int): UserEntity?
+    fun findByUsername(username: String): UserEntity?
 
     @Modifying
     @Transactional

@@ -1,5 +1,6 @@
 package com.techno_1.springbootdasar.exception
 
+import com.techno_1.springbootdasar.domain.dto.response.ResBaseDto
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.ResponseEntity
@@ -11,6 +12,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 class ErrorHandler {
+
+    @ExceptionHandler(Exception::class)
+    fun handlerException(exception: Exception): ResponseEntity<ResBaseDto<String>> {
+        println("Error General")
+        exception.printStackTrace()
+        val response = (ResBaseDto(false, "Something went Wrong", null, 400, exception.message))
+
+        return ResponseEntity.badRequest().body(response)
+
+    }
 
     @ExceptionHandler(CustomExceptionHandler::class)
     fun handleCustomException(exception: RuntimeException): ResponseEntity<Any>{
