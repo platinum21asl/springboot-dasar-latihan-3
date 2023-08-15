@@ -17,8 +17,8 @@ data class TokenEntity(
     @field:Column(name = "token", columnDefinition = "varchar(255)")
     val token: String? = null,
 
-    @field:Column(name = "expired", columnDefinition = "bigint")
-    val expired: Long? = null,
+    @field:Column(name = "expired", columnDefinition = "timestamp")
+    val expired: LocalDateTime? = null,
 
     @OneToOne
     @field:JoinColumn(name = "id_user", referencedColumnName = "id", columnDefinition = "bigint")

@@ -8,4 +8,6 @@ interface TokenRepository: JpaRepository<TokenEntity, String> {
 
     fun findIdByToken(token: String): TokenEntity?
     fun findById(id: Int): TokenEntity?
+
+
 }

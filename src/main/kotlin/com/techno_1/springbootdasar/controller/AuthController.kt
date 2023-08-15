@@ -29,7 +29,7 @@ class AuthController(
     }
 
     @PostMapping("/login/validateToken")
-    fun validateToken(@RequestBody reqValidateLoginDto: ReqValidateLoginDto):  ResponseEntity<ResBaseDto<ResValidateLoginDto>>{
+    fun validateToken(@RequestBody reqValidateLoginDto: ReqValidateLoginDto): ResponseEntity<ResBaseDto<Any>> {
         val response = authService.authValidateTokenUsers(reqValidateLoginDto)
 
         return ResponseEntity.ok().body(response)

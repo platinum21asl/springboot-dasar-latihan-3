@@ -9,5 +9,7 @@ interface AuthLoginService {
 
     fun authLogin(reqAuthLoginDto: ReqAuthLoginDto) : ResBaseDto<Any>
 
-    fun authValidateTokenUsers(reqValidateLoginDto: ReqValidateLoginDto): ResBaseDto<ResValidateLoginDto>
+    fun authValidateTokenUsers(reqValidateLoginDto: ReqValidateLoginDto): ResBaseDto<Any>
+
+    fun validateToken(auth: String): Boolean
 }

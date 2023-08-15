@@ -13,6 +13,11 @@ import com.techno_1.springbootdasar.repository.UserRepository
 import com.techno_1.springbootdasar.service.AuthLoginService
 import com.techno_1.springbootdasar.util.JwtGenerator
 import org.springframework.stereotype.Service
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 @Service
@@ -30,17 +35,17 @@ class AuthLoginServiceImpl(
         if(reqAuthLoginDto.password != dataUser.password) throw CustomExceptionHandler("Password invalid")
 //
 //
-        val exp =  10 * 60000L // 5 menit  (60000L per Menit)
-
+        var expiredJwt = System.currentTimeMillis()+600000L
+        val expiredDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(expiredJwt),ZoneId.systemDefault())
         val token = JwtGenerator().createJwt(
-            reqAuthLoginDto.username!!,
+            dataUser.id.toString(),
             reqAuthLoginDto.password!!,
-            exp
+            expiredJwt
         )
 
         val data = TokenEntity(
             token = token,
-            expired = exp,
+            expired = expiredDate,
             idUser = dataUser
         )
 
@@ -51,24 +56,36 @@ class AuthLoginServiceImpl(
             token = token,
 
         )
-        val response = ResBaseDto(data = dataResponse)
-
-        return ResBaseDto (data = response)
-
+        return ResBaseDto(data = dataResponse)
     }
 
-    override fun authValidateTokenUsers(reqValidateLoginDto: ReqValidateLoginDto): ResBaseDto<ResValidateLoginDto> {
+    override fun authValidateTokenUsers(reqValidateLoginDto: ReqValidateLoginDto): ResBaseDto<Any> {
         val data = tokenRepository.findIdByToken(reqValidateLoginDto.token.toString()) ?: throw CustomExceptionHandler("Token Not Found or Expired")
 
-        val response = ResValidateLoginDto(
-            id = data.id!!,
-            name = data.idUser?.name!!,
-            email = data.idUser.email!!,
-            username = data.idUser.username!!
+        val isTokenValid = validateToken(reqValidateLoginDto.token.toString())
+        println(data.expired)
+        val response = mapOf(
+            "id" to data.idUser?.id,
+            "name" to data.idUser?.name,
+            "username" to data.idUser?.username,
+            "email" to data.idUser?.email
         )
 
         return ResBaseDto(data = response)
     }
+
+    override fun validateToken(auth: String): Boolean {
+        val data = tokenRepository.findIdByToken(auth) ?: throw CustomExceptionHandler("Token not valid")
+        val dateTimeString = data.expired.toString()
+        val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
+        val dateTime = LocalDateTime.parse(dateTimeString, dateTimeFormatter)
+        val currentTime = LocalDateTime.now()
+        if (currentTime.isAfter(dateTime)) {
+            throw CustomExceptionHandler("Waktu token telah habis")
+        }
+        return true
+    }
+
 
 
 }
